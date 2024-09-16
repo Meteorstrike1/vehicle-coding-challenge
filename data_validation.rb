@@ -33,11 +33,7 @@ module DataValidation
     month = date.month
     year = date.year
     without_century = year.to_s[2..]
-    if month >= 3 && month <= 8
-      without_century
-    else
-      (without_century.to_i + 50).to_s
-    end
+    month >= 3 && month <= 8 ? without_century : (without_century.to_i + 50).to_s
   end
 
   def random_letters

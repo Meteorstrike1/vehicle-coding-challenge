@@ -1,9 +1,9 @@
 ## Vehicle coding challenge
-Project demonstrating generation of car registration numbers using fictional rules
+Project demonstrating generation of vehicle registration numbers using fictional rules.
 
 
 ### Specification
-*Note: Rules are fictional*
+The fictional requirements that were used here to implement generating a registration number.
 #### Vehicle Registration Number
 The format of a vehicle's registration number is: <br>
 `area code` + `whitespace` + `age identifier` + `whitespace` + `random letters`
