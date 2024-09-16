@@ -3,8 +3,8 @@
 require_relative 'errors'
 require 'date'
 
-# Methods and constants for generating sections of the registration number
-module DataCreation
+# Methods and constants for generating and validating sections of the registration number
+module DataValidation
   include Errors
 
   SWANSEA_SECOND_LETTER = %w[A B C D E F G H I J K].freeze
@@ -26,10 +26,8 @@ module DataCreation
   end
 
   def make_age_id(manufacture_date:)
-    # Parsing to date object to validate the date
     date = Date.strptime(manufacture_date, '%d-%m-%Y')
-  rescue Date::Error => e
-    puts e.message.capitalize
+  rescue Date::Error
     raise InvalidDate
   else
     month = date.month

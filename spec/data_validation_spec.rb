@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data_creation'
+require_relative '../data_validation'
 
-describe DataCreation do
-  include DataCreation
+describe DataValidation do
+  include DataValidation
 
   it 'gives a number' do
     date = '15-03-2012'
@@ -22,6 +22,6 @@ describe DataCreation do
 
   it "isn't valid registration area" do
     area = 'london'
-    expect { make_area_code(area: area) }.to raise_error(Errors::InvalidRegistrationArea)
+    expect { make_area_code(area:) }.to raise_error(Errors::InvalidRegistrationArea)
   end
 end

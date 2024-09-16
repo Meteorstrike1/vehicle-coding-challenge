@@ -1,34 +1,41 @@
 # frozen_string_literal: true
 
-require_relative 'vehicle'
+require_relative 'vehicle_registration_number'
 require_relative 'file_handler'
+require_relative 'errors'
 require 'logger'
 
-task :first_task do
+LOG = Logger.new($stdout)
+LOG.datetime_format = '%H:%M:%S'
+LOG.level = Logger::DEBUG
+
+desc 'Load vehicle data and attempt to generate vehicle registration number'
+task :generate_vrns do
   filename = 'vehicles.csv'
 
-  imported_csv = FileHandler.load_file_into_hash(filename)
+  pass_count = 0
+  fail_count = 0
+  successful_vrns = []
 
-  dataset = Vehicle.new
+  imported_csv = FileHandler.load_file_into_hash(filename)
+  dataset = VehicleRegistrationNumber.new
 
   imported_csv.each do |vehicle|
-    dataset.make_vrn(vehicle: vehicle)
+    vrn = dataset.make_vrn(vehicle:)
+  rescue Errors::InvalidRegistrationArea, Errors::InvalidDate => e
+    fail_count += 1
+    LOG.debug { "Failed to generate VRN: #{e.message}" }
+  else
+    successful_vrns.append(vrn)
+    pass_count += 1
   end
 
-  sample = dataset.list_successful_vrns
+  by_area = dataset.total_registrations_by_area
+  uniques = successful_vrns.uniq
 
-  puts sample
-
-  puts dataset.total_pass_count
-  puts dataset.total_fail_count
-  puts dataset.total_registrations_by_area
-
-  list_of_vrns = sample.split(',')
-
-  uniqs = list_of_vrns.uniq
-
-  puts list_of_vrns.length
-  puts uniqs.length
-
-  puts "Repeats: #{list_of_vrns.length - uniqs.length}"
+  # LOG.info { "Successful VRNs: #{successful_vrns}" }
+  LOG.info { "Total number of VRNs successfully generated: #{pass_count}" }
+  LOG.info { "Number of VRNs generated per registration area: #{by_area}" }
+  LOG.info { "Number of VRNs that could not be determined: #{fail_count}" }
+  LOG.info { "Number of duplicate VRNs: #{successful_vrns.length - uniques.length}" }
 end
