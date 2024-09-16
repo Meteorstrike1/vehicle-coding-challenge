@@ -5,10 +5,10 @@ Project demonstrating generation of vehicle registration numbers using fictional
 ### Specification
 The fictional requirements that were used here to implement generating a registration number.
 #### Vehicle Registration Number
-The format of a vehicle's registration number is: <br>
+The format of a vehicle's registration number is:\
 `area code` + `whitespace` + `age identifier` + `whitespace` + `random letters`
 
-Examples:<br>
+Examples:\
 CA 12 ABC, BC 73 NLP, CT 66 WLH
 
 
@@ -32,14 +32,35 @@ The two digit age identifier is determined from a vehicle's date of manufacture.
 #### Random Letters
 Three random letters are used but the following letters cannot appear: (I, K, M, Y).
 
-Examples: <br>
-**Valid** - ABC, FGH, etc <br>
+Examples:\
+**Valid** - ABC, FGH, etc\
 **Invalid** - ABI, YDF, etc
 
 
+
 ### Project setup
+**Prerequisites:** A recent version of Ruby (see [here](https://www.ruby-lang.org/en/documentation/installation/) if need to install)
+1. Clone repository
 ```shell
+git clone https://github.com/Meteorstrike1/vehicle-coding-challenge.git
+```
+2. Change to directory and install gems
+```shell
+cd ./vehicle-coding-challenge
 bundle install
 ```
 
-### Requirements
+### Run tasks
+Version which doesn't handle duplicates
+```shell
+rake generate_vrns
+```
+Version which removes duplicates
+```shell
+rake generate_vrns_without_duplicates
+```
+
+### Run tests
+```shell
+rspec
+```

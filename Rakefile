@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'vehicle_registration_number'
-require_relative 'file_handler'
-require_relative 'errors'
+require_relative 'lib/vehicle_registration_number'
+require_relative 'lib/file_handler'
+require_relative 'lib/errors'
 require 'logger'
 
 LOG = Logger.new($stdout)
@@ -11,7 +11,7 @@ LOG.level = Logger::DEBUG
 
 desc 'Load vehicle data and attempt to generate vehicle registration number'
 task :generate_vrns do
-  filename = 'vehicles.csv'
+  filename = 'db/vehicles.csv'
 
   pass_count = 0
   fail_count = 0
@@ -44,7 +44,7 @@ end
 # Not very optimised
 desc 'Load vehicle data and attempt to generate vehicle registration number without duplicates'
 task :generate_vrns_without_duplicates do
-  filename = 'vehicles.csv'
+  filename = 'db/vehicles.csv'
 
   pass_count = 0
   fail_count = 0

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../data_validation'
+require_relative '../lib/data_validation'
 
 describe DataValidation do
   include DataValidation
