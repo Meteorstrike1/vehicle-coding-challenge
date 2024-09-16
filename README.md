@@ -38,5 +38,8 @@ Examples: <br>
 
 
 ### Project setup
+```shell
+bundle install
+```
 
 ### Requirements

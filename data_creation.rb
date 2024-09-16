@@ -7,8 +7,8 @@ require 'date'
 module DataCreation
   include Errors
 
-  SWANSEA_SECOND_LETTER = ('A'..'K').to_a
-  CARDIFF_SECOND_LETTER = ('L'..'Z').to_a
+  SWANSEA_SECOND_LETTER = %w[A B C D E F G H I J K].freeze
+  CARDIFF_SECOND_LETTER = %w[L M N O P Q R S T U V W X Y Z].freeze
   BIRMINGHAM_SECOND_LETTER = %w[A B C].freeze
   RANDOM_LETTERS = %w[A B C D E F G H J L N O P Q R S T U V W X Z].freeze
 
