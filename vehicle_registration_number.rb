@@ -6,27 +6,24 @@ require_relative 'data_validation'
 class VehicleRegistrationNumber
   include DataValidation
 
-  attr_reader :by_area
-
-  def initialize
-    super
-    @by_area = []
-  end
-
-  def total_registrations_by_area
-    swansea = @by_area.count('swansea')
-    cardiff = @by_area.count('cardiff')
-    birmingham = @by_area.count('birmingham')
-    "Swansea = #{swansea}, Cardiff = #{cardiff}, Birmingham = #{birmingham}"
-  end
-
   def make_vrn(vehicle:)
     area = vehicle['registrationArea'].downcase
     date = vehicle['dateOfManufacture']
     area_code = make_area_code(area:)
     age_id = make_age_id(manufacture_date: date)
     letters = random_letters
-    @by_area.append(area)
     "#{area_code} #{age_id} #{letters}"
+  end
+
+  def total_registrations_by_area(list:)
+    swansea = 0
+    cardiff = 0
+    birmingham = 0
+    list.each do |hash|
+      swansea += 1 if hash['area'] == 'swansea'
+      cardiff += 1 if hash['area'] == 'cardiff'
+      birmingham += 1 if hash['area'] == 'birmingham'
+    end
+    "Swansea = #{swansea}, Cardiff = #{cardiff}, Birmingham = #{birmingham}"
   end
 end
