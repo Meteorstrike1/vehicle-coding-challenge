@@ -1,5 +1,5 @@
-require 'rspec/autorun'
-require_relative 'data_creation'
+# require 'rspec/autorun'
+require_relative '../data_creation'
 
 describe DataCreation do
   include DataCreation
