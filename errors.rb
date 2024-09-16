@@ -13,4 +13,7 @@ module Errors
 
   class InvalidDate < StandardError
   end
+
+  class InvalidFileFormat < StandardError
+  end
 end
