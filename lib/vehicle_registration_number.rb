@@ -7,7 +7,7 @@ class VehicleRegistrationNumber
   include DataValidation
 
   def make_vrn(vehicle:)
-    area = vehicle['registrationArea'].downcase
+    area = vehicle['registrationArea']
     date = vehicle['dateOfManufacture']
     area_code = make_area_code(area:)
     age_id = make_age_id(manufacture_date: date)
