@@ -30,4 +30,14 @@ module Errors
       @message = 'Invalid file format'
     end
   end
+
+  # VRN already exists
+  class DuplicateEntryError < StandardError
+    attr_reader :message
+
+    def initialize
+      super
+      @message = 'VRN must be unique'
+    end
+  end
 end
