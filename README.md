@@ -64,7 +64,7 @@ rake registration_numbers:generate
 ```
 Version which removes duplicates
 ```shell
-rake registration_numbers:without_duplicates
+rake registration_numbers:reject_duplicates
 ```
 
 ### Run tests

@@ -44,7 +44,7 @@ namespace :registration_numbers do
       pass_count += 1
     end
 
-    by_area = dataset.total_registrations_by_area(list: successful_vrns)
+    by_area = VehicleRegistrationNumber.total_registrations_by_area(list: successful_vrns)
     uniques = successful_vrns.uniq
 
     # LOG.info { "Successful VRNs: #{successful_vrns}" }
@@ -54,16 +54,11 @@ namespace :registration_numbers do
     LOG.info { "Number of duplicate VRNs: #{successful_vrns.length - uniques.length}" }
   end
 
-  # Not very optimised
   desc 'Load vehicle data and attempt to generate vehicle registration number without duplicates'
-  task :without_duplicates do
+  task :reject_duplicates do
     filename = 'db/vehicles.csv'
 
-    pass_count = 0
-    fail_count = 0
-    area_fail_count = 0
-    date_fail_count = 0
-    duplicate_fail_count = 0
+    invalid_vrns = []
     successful_vrns = Set.new
 
     imported_csv = FileHandler.load_file_into_hash(filename)
@@ -73,31 +68,26 @@ namespace :registration_numbers do
       vrn = dataset.make_vrn(vehicle:)
       area = vehicle['registrationArea']
     rescue Errors::InvalidRegistrationArea => e
-      area_fail_count += 1
-      fail_count += 1
+      invalid_vrns << { reason: 'invalid area' }
       LOG.debug { "Failed to generate VRN: #{e.message}" }
     rescue Errors::InvalidDate => e
-      date_fail_count += 1
-      fail_count += 1
+      invalid_vrns << { reason: 'invalid date' }
       LOG.debug { "Failed to generate VRN: #{e.message}" }
     else
-      before_length = successful_vrns.length
-      successful_vrns.add({ 'area' => area, 'vrn' => vrn })
-      after_length = successful_vrns.length
-      if before_length == after_length
-        duplicate_fail_count += 1
-        fail_count += 1
+      if successful_vrns.include?({ 'area' => area, 'vrn' => vrn })
+        invalid_vrns << { reason: 'duplicate entry' }
         LOG.debug { 'Failed to generate VRN: Duplicate entry' }
       else
-        pass_count += 1
+        successful_vrns.add({ 'area' => area, 'vrn' => vrn })
       end
     end
 
-    by_area = dataset.total_registrations_by_area(list: successful_vrns)
+    by_area = VehicleRegistrationNumber.total_registrations_by_area(list: successful_vrns)
+    by_invalid_type = VehicleRegistrationNumber.filter_by_invalid_type(invalid_record: invalid_vrns)
 
-    LOG.info { "Total number of VRNs successfully generated: #{pass_count}" }
+    LOG.info { "Total number of VRNs successfully generated: #{successful_vrns.count}" }
     LOG.info { "Number of VRNs generated per registration area: #{by_area}" }
-    LOG.info { "Total number of VRNs that could not be determined: #{fail_count}" }
-    LOG.info { "Reason for failing: Invalid area = #{area_fail_count}, duplication = #{duplicate_fail_count}, invalid date = #{date_fail_count}" }
+    LOG.info { "Total number of VRNs that could not be determined: #{invalid_vrns.count}" }
+    LOG.info { "Reason for failing: #{by_invalid_type}" }
   end
 end
