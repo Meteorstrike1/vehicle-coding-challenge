@@ -4,7 +4,7 @@ require_relative 'errors'
 require 'date'
 
 # Methods and constants for generating and validating sections of the registration number
-module DataValidation
+module DataGeneration
   include Errors
 
   SWANSEA_SECOND_LETTER = %w[A B C D E F G H I J K].freeze
@@ -31,9 +31,9 @@ module DataValidation
     raise InvalidDate
   else
     month = date.month
-    year = date.year
-    without_century = year.to_s[2..]
-    month >= 3 && month <= 8 ? without_century : (without_century.to_i + 50).to_s
+    year = date.strftime('%y')
+    march_to_august = (3..8)
+    march_to_august.include?(month) ? year : (year.to_i + 50).to_s
   end
 
   def random_letters

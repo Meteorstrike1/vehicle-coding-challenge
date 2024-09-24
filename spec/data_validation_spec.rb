@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../lib/data_validation'
+require_relative '../lib/data_generation'
 
-describe DataValidation do
-  include DataValidation
+describe DataGeneration do
+  include DataGeneration
 
   it 'gives the expected area code format for Birmingham' do
     area = 'birmingham'

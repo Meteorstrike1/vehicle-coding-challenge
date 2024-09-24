@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'data_validation'
+require_relative 'data_generation'
 
 # Generate Vehicle Registration Number
 class VehicleRegistrationNumber
-  include DataValidation
+  include DataGeneration
 
   attr_reader :vrn
 
