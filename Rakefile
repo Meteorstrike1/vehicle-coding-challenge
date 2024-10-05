@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'lib/vehicle_registration_number'
 require_relative 'lib/data_formatting'
 require_relative 'lib/vehicle'
 require_relative 'lib/file_handler'
@@ -35,9 +34,9 @@ namespace :registration_numbers do
 
     imported_csv.each do |row|
       new_vehicle = Vehicle.new(row)
-      raise Errors::DuplicateEntryError if vehicles[new_vehicle.vrn.to_s]
+      raise Errors::DuplicateEntryError if vehicles[new_vehicle.vrn]
 
-      vehicles[new_vehicle.vrn.to_s] = new_vehicle
+      vehicles[new_vehicle.vrn] = new_vehicle
     rescue Errors::DuplicateEntryError => e
       invalid_records << { reason: 'duplicate entry', data: row }
       LOG.debug { "Failed to generate VRN: #{e.message}" }
@@ -69,8 +68,8 @@ namespace :registration_numbers do
 
     imported_csv.each do |row|
       new_vehicle = Vehicle.new(row)
-      new_vehicle = Vehicle.new(row) while vehicles[new_vehicle.vrn.to_s]
-      vehicles[new_vehicle.vrn.to_s] = new_vehicle
+      new_vehicle = Vehicle.new(row) while vehicles[new_vehicle.vrn]
+      vehicles[new_vehicle.vrn] = new_vehicle
     rescue Errors::DuplicateEntryError => e
       invalid_records << { reason: 'duplicate entry', data: row }
       LOG.debug { "Failed to generate VRN: #{e.message}" }

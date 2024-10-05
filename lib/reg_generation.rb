@@ -12,7 +12,7 @@ module RegGeneration
   BIRMINGHAM_SECOND_LETTER = %w[A B C].freeze
   RANDOM_LETTERS = %w[A B C D E F G H J L N O P Q R S T U V W X Z].freeze
 
-  def make_area_code(area:)
+  def area_code(area:)
     area = SimpleSymbolize.symbolize(area) unless area.is_a?(Symbol)
     case area
     when :swansea
@@ -26,7 +26,7 @@ module RegGeneration
     end
   end
 
-  def make_age_id(manufacture_date:)
+  def age_id(manufacture_date:)
     date = Date.strptime(manufacture_date, '%d-%m-%Y')
   rescue Date::Error
     raise InvalidDate
