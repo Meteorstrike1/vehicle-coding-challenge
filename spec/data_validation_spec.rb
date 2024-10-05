@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../lib/data_generation'
+require_relative '../lib/reg_generation'
 
-describe DataGeneration do
-  include DataGeneration
+describe RegGeneration do
+  include RegGeneration
 
   it 'gives the expected area code format for Birmingham' do
     area = 'birmingham'

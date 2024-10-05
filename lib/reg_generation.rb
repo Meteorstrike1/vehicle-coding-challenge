@@ -3,8 +3,8 @@
 require_relative 'errors'
 require 'date'
 
-# Methods and constants for generating and validating sections of the registration number
-module DataGeneration
+# Methods and constants for generating sections of the registration number
+module RegGeneration
   include Errors
 
   SWANSEA_SECOND_LETTER = %w[A B C D E F G H I J K].freeze
@@ -13,12 +13,13 @@ module DataGeneration
   RANDOM_LETTERS = %w[A B C D E F G H J L N O P Q R S T U V W X Z].freeze
 
   def make_area_code(area:)
-    case area.downcase
-    when 'swansea'
+    area = SimpleSymbolize.symbolize(area) unless area.is_a?(Symbol)
+    case area
+    when :swansea
       "C#{SWANSEA_SECOND_LETTER.sample}"
-    when 'cardiff'
+    when :cardiff
       "C#{CARDIFF_SECOND_LETTER.sample}"
-    when 'birmingham'
+    when :birmingham
       "B#{BIRMINGHAM_SECOND_LETTER.sample}"
     else
       raise InvalidRegistrationArea

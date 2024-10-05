@@ -8,10 +8,10 @@ class Vehicle
 
   def initialize(record)
     @vrn = VehicleRegistrationNumber.new(vehicle: record)
-    @make = record['make']
-    @colour = record['colour']
-    @date_of_manufacture = record['dateOfManufacture']
+    @make = record[:make]
+    @colour = record[:colour]
+    @date_of_manufacture = record[:date_of_manufacture]
     @vin = record['vin']
-    @registration_area = record['registrationArea']
+    @registration_area = record[:registration_area]
   end
 end

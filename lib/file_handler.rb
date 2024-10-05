@@ -2,6 +2,7 @@
 
 require_relative 'errors'
 require 'csv'
+require 'simple_symbolize'
 
 # File handler
 module FileHandler
@@ -12,6 +13,11 @@ module FileHandler
     file = CSV.read(filename)
     raise InvalidFileFormat unless file.first == REQUIRED_HEADERS
 
-    CSV.foreach(filename, headers: true).map(&:to_h)
+    CSV.foreach(filename, headers: true, header_converters: ->(h) { SimpleSymbolize.symbolize(h) }).map(&:to_h)
   end
+
+  def self.create_output_file
+    # TODO: Output
+  end
+
 end
