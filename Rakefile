@@ -48,8 +48,8 @@ namespace :registration_numbers do
       LOG.debug { "Failed to generate VRN: #{e.message}" }
     end
 
-    by_area = DataFormatting.filter_by_area(hash: vehicles)
-    by_invalid_type = DataFormatting.filter_by_invalid_type(invalid_record: invalid_records)
+    by_area = DataFormatting.filter_by_area(vehicles:)
+    by_invalid_type = DataFormatting.filter_by_invalid_type(invalid_records:)
 
     LOG.info { "Total number of VRNs successfully generated: #{vehicles.count}" }
     LOG.info { "Number of VRNs generated per registration area: #{by_area}" }
@@ -81,12 +81,12 @@ namespace :registration_numbers do
       LOG.debug { "Failed to generate VRN: #{e.message}" }
     end
 
-    by_area = DataFormatting.filter_by_area(hash: vehicles)
-    by_invalid_type = DataFormatting.filter_by_invalid_type(invalid_record: invalid_records)
+    by_area = DataFormatting.filter_by_area(vehicles:)
+    by_invalid_type = DataFormatting.filter_by_invalid_type(invalid_records:)
 
     LOG.info { "Total number of VRNs successfully generated: #{vehicles.count}" }
     LOG.info { "Number of VRNs generated per registration area: #{by_area}" }
     LOG.info { "Total number of VRNs that could not be determined: #{invalid_records.count}" }
-    LOG.info { "Reason for failing: #{by_invalid_type}" }
+    LOG.info { "Reasons for failing: #{by_invalid_type}" }
   end
 end
