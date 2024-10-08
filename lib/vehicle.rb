@@ -9,11 +9,11 @@ class Vehicle
   attr_reader :vrn, :make, :colour, :date_of_manufacture, :vin, :registration_area
 
   def initialize(record)
-    @vrn = "#{area_code(area: record[:registration_area])} #{age_id(manufacture_date: record[:date_of_manufacture])} #{random_letters}"
+    @vrn = generate_vrn(record)
     @make = record[:make]
     @colour = record[:colour]
     @date_of_manufacture = record[:date_of_manufacture]
-    @vin = record['vin']
+    @vin = record[:vin]
     @registration_area = record[:registration_area]
   end
 end

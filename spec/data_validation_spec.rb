@@ -36,6 +36,17 @@ describe RegGeneration do
     expect(age_id(manufacture_date: date)).to eq '69'
   end
 
+  it 'gives valid random letters' do
+    regex = /^[A-HJLN-XZ]{3}$/
+    expect(random_letters).to match regex
+  end
+
+  it 'gives the expected vrn format for a valid vehicle from Cardiff' do
+    record = { registration_area: 'cardiff', date_of_manufacture: '7-11-2018' }
+    regex = /^C[L-Z] 68 [A-HJLN-XZ]{3}$/
+    expect(generate_vrn(record)).to match regex
+  end
+
   it 'gives an invalid date error' do
     date = '30-02-2024'
     expect { age_id(manufacture_date: date) }.to raise_error(Errors::InvalidDate)
