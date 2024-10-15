@@ -1,33 +1,33 @@
-# frozen_string_literal: true
-
 module Errors
   # Cannot process the registration area
   class InvalidRegistrationArea < StandardError
-    attr_reader :message
 
-    def initialize
+    def initialize(message = 'Invalid registration area')
       super
-      @message = 'Invalid registration area'
     end
   end
 
   # Cannot handle the date
   class InvalidDate < StandardError
-    attr_reader :message
 
-    def initialize
+    def initialize(message = 'Invalid date')
       super
-      @message = 'Invalid date'
     end
   end
 
   # Cannot handle the file
   class InvalidFileFormat < StandardError
-    attr_reader :message
 
-    def initialize
+    def initialize(message = 'Invalid file format')
       super
-      @message = 'Invalid file format'
+    end
+  end
+
+  # VRN already exists
+  class DuplicateEntryError < StandardError
+
+    def initialize(message = 'VRN must be unique')
+      super
     end
   end
 end

@@ -1,8 +1,3 @@
-# frozen_string_literal: true
-
-require_relative '../lib/file_handler'
-require 'rspec'
-
 describe FileHandler do
   include FileHandler
 

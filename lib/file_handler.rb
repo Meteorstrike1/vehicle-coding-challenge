@@ -1,7 +1,8 @@
-# frozen_string_literal: true
-
 require_relative 'errors'
 require 'csv'
+require 'simple_symbolize'
+require 'json'
+# require 'date_time'
 
 # File handler
 module FileHandler
@@ -12,6 +13,14 @@ module FileHandler
     file = CSV.read(filename)
     raise InvalidFileFormat unless file.first == REQUIRED_HEADERS
 
-    CSV.foreach(filename, headers: true).map(&:to_h)
+    CSV.foreach(filename, headers: true, header_converters: ->(h) { SimpleSymbolize.symbolize(h) }).map(&:to_h)
   end
+
+  # def self.create_output_file(vehicles, invalid_records)
+  #   # timestamp = DateTime.now
+  #   # output = File.new("output#{timestamp}.csv", 'w')
+  #   vehicles.each_value { |vehicle| puts vehicle.as_json }
+  #   CSV.open('data.csv', 'w', )
+  #
+  # end
 end

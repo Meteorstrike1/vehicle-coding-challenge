@@ -40,6 +40,7 @@ GEM
     rubocop-ast (1.32.2)
       parser (>= 3.3.1.0)
     ruby-progressbar (1.13.0)
+    simple_symbolize (4.0.0)
     unicode-display_width (2.5.0)
 
 PLATFORMS
@@ -51,6 +52,7 @@ DEPENDENCIES
   rake (~> 13.2)
   rspec (~> 3.13)
   rubocop (~> 1.65)
+  simple_symbolize (~> 4.0)
 
 BUNDLED WITH
    2.5.15

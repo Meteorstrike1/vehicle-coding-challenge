@@ -58,13 +58,13 @@ bundle install
 
 ---
 ### Run main tasks
-Version which doesn't handle duplicates
+Version which rejects duplicates
 ```shell
-rake registration_numbers:generate
+rake registration_numbers:reject_duplicates
 ```
 Version which removes duplicates
 ```shell
-rake registration_numbers:reject_duplicates
+rake registration_numbers:retry_duplicates
 ```
 
 ### Run tests
