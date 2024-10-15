@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'lib/data_formatting'
 require_relative 'lib/vehicle'
 require_relative 'lib/file_handler'
@@ -39,13 +37,13 @@ namespace :registration_numbers do
       vehicles[new_vehicle.vrn] = new_vehicle
     rescue Errors::DuplicateEntryError => e
       invalid_records << { reason: 'duplicate entry', data: row }
-      LOG.debug { "Failed to generate VRN: #{e.message}" }
+      LOG.debug { "Failed to generate VRN: #{e}" }
     rescue Errors::InvalidRegistrationArea => e
       invalid_records << { reason: 'invalid area', data: row }
-      LOG.debug { "Failed to generate VRN: #{e.message}" }
+      LOG.debug { "Failed to generate VRN: #{e}" }
     rescue Errors::InvalidDate => e
       invalid_records << { reason: 'invalid date', data: row }
-      LOG.debug { "Failed to generate VRN: #{e.message}" }
+      LOG.debug { "Failed to generate VRN: #{e}" }
     end
 
     by_area = DataFormatting.filter_by_area(vehicles:)
@@ -55,6 +53,7 @@ namespace :registration_numbers do
     LOG.info { "Number of VRNs generated per registration area: #{by_area}" }
     LOG.info { "Total number of VRNs that could not be determined: #{invalid_records.count}" }
     LOG.info { "Reason for failing: #{by_invalid_type}" }
+    # FileHandler.create_output_file(vehicles, invalid_records)
   end
 
   desc 'Load vehicle data and attempt to generate vehicle registration number without duplicates'
@@ -72,13 +71,13 @@ namespace :registration_numbers do
       vehicles[new_vehicle.vrn] = new_vehicle
     rescue Errors::DuplicateEntryError => e
       invalid_records << { reason: 'duplicate entry', data: row }
-      LOG.debug { "Failed to generate VRN: #{e.message}" }
+      LOG.debug { "Failed to generate VRN: #{e}" }
     rescue Errors::InvalidRegistrationArea => e
       invalid_records << { reason: 'invalid area', data: row }
-      LOG.debug { "Failed to generate VRN: #{e.message}" }
+      LOG.debug { "Failed to generate VRN: #{e}" }
     rescue Errors::InvalidDate => e
       invalid_records << { reason: 'invalid date', data: row }
-      LOG.debug { "Failed to generate VRN: #{e.message}" }
+      LOG.debug { "Failed to generate VRN: #{e}" }
     end
 
     by_area = DataFormatting.filter_by_area(vehicles:)

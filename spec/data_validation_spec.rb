@@ -1,7 +1,3 @@
-# frozen_string_literal: true
-
-require_relative '../lib/reg_generation'
-
 describe RegGeneration do
   include RegGeneration
 

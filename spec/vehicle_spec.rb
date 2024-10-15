@@ -1,5 +1,3 @@
-require_relative '../lib/vehicle'
-
 describe Vehicle do
 
   it 'successfully generates a Vehicle object' do
